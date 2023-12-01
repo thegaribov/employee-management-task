@@ -1,3 +1,5 @@
+using EmployeeManagement.API.Extensions;
+
 namespace EmployeeManagement.API
 {
     public class Program
@@ -6,16 +8,26 @@ namespace EmployeeManagement.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            ConfigureServices(builder);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            ConfigureMiddlewarePipeline(app);
+
+            app.Run();
+        }
+
+        private static void ConfigureServices(WebApplicationBuilder builder)
+        {
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddDatabase(builder.Environment, builder.Configuration);
+
+            builder.Services.AddApiServices();
+        }
+        private static void ConfigureMiddlewarePipeline(WebApplication app)
+        {
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -23,13 +35,9 @@ namespace EmployeeManagement.API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-
             app.MapControllers();
-
-            app.Run();
         }
     }
 }
