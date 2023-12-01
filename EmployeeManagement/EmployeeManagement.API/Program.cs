@@ -1,4 +1,5 @@
 using EmployeeManagement.API.Extensions;
+using EmployeeManagement.API.Middlewares;
 
 namespace EmployeeManagement.API
 {
@@ -25,17 +26,33 @@ namespace EmployeeManagement.API
             builder.Services.AddDatabase(builder.Environment, builder.Configuration);
 
             builder.Services.AddApiServices();
+            builder.Services.RegisterAutoMapper();
+
+            builder.Services.AddApiBehaviorConfigurations();
         }
         private static void ConfigureMiddlewarePipeline(WebApplication app)
         {
+            app.UseHttpsRedirection();
+
+            app.UseCors(cpb =>
+                   cpb.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            );
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<PerformanceMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.MapControllers();
         }
