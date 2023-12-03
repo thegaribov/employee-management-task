@@ -1,5 +1,6 @@
 using EmployeeManagement.API.Extensions;
 using EmployeeManagement.API.Middlewares;
+using Serilog;
 
 namespace EmployeeManagement.API
 {
@@ -8,6 +9,8 @@ namespace EmployeeManagement.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Host.UseSerilog((ctx, lc) 
+                => lc.ReadFrom.Configuration(ctx.Configuration));
 
             ConfigureServices(builder);
 
@@ -32,7 +35,13 @@ namespace EmployeeManagement.API
         }
         private static void ConfigureMiddlewarePipeline(WebApplication app)
         {
-            app.UseHttpsRedirection();
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseCors(cpb =>
                    cpb.AllowAnyOrigin()
@@ -40,19 +49,14 @@ namespace EmployeeManagement.API
                     .AllowAnyHeader()
             );
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSerilogRequestLogging();
 
-            app.UseRouting();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseMiddleware<PerformanceMiddleware>();
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.MapControllers();
         }
