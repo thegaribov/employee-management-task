@@ -1,20 +1,25 @@
-﻿using EmployeeManagement.Business.MappingProfiles;
+﻿using EmployeeManagement.Business.Handlers.Employee.Queries;
+using EmployeeManagement.Business.MappingProfiles;
 using EmployeeManagement.DataAccess.Contexts;
+using EmployeeManagement.DataAccess.Repositories.Abstracts;
+using EmployeeManagement.DataAccess.Repositories.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace EmployeeManagement.API.Extensions;
 
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddApiServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
-        serviceCollection.AddHttpContextAccessor();
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddHttpContextAccessor();
 
-        //serviceCollection.AddTransient<IGeolocationService, CustomGeolocationService>();
-        //serviceCollection.AddTransient<IAirportProvider, CTeleportProvider>();
-        return serviceCollection;
+        return services;
     }
 
     public static IServiceCollection AddDatabase
@@ -51,8 +56,11 @@ public static class IServiceCollectionExtensions
         });
     }
 
-    //public static IServiceCollection AddMediatr(this IServiceCollection serviceCollection)
-    //{
-    //    return serviceCollection.AddMediatR(typeof(GetDistanceBetweenAirportsQueryHandler).GetTypeInfo().Assembly);
-    //}
+    public static IServiceCollection AddMediatr(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection.AddMediatR(x =>
+        {
+            x.RegisterServicesFromAssembly(typeof(GetAllEmployees).Assembly);
+        });
+    }
 }
