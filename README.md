@@ -18,6 +18,7 @@ Basic employee management system. Features :
 - AutoMapper
 - SQL Server
 - Swagger UI
+- Serilog
 
 # Design principles & patterns
 - Unit Of Work
