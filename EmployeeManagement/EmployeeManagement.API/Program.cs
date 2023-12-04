@@ -1,26 +1,31 @@
 using EmployeeManagement.API.Extensions;
 using EmployeeManagement.API.Middlewares;
+using EmployeeManagement.DataAccess.Persistance;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace EmployeeManagement.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Host.UseSerilog((ctx, lc) 
+            builder.Host.UseSerilog((ctx, lc)
                 => lc.ReadFrom.Configuration(ctx.Configuration));
 
-            ConfigureServices(builder);
+            ConfigureServices(builder);           
 
             var app = builder.Build();
+
+            await ApplyMigrations(app.Services);
 
             ConfigureMiddlewarePipeline(app);
 
             app.Run();
         }
 
+        
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
             builder.Services.AddControllers();
@@ -39,11 +44,8 @@ namespace EmployeeManagement.API
         }
         private static void ConfigureMiddlewarePipeline(WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
@@ -64,5 +66,13 @@ namespace EmployeeManagement.API
 
             app.MapControllers();
         }
+        private static async Task ApplyMigrations(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                await AutomatedMigration.MigrateAsync(scope.ServiceProvider);
+            }
+        }
+
     }
 }

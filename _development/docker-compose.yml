@@ -1,0 +1,49 @@
+version: "3.9"
+services:
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest 
+    container_name: sql-server-db
+    volumes:
+      - sql-server-data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    env_file: envs/sql-server-db.env
+
+  api:
+    container_name: "api"
+    restart: always
+    volumes:
+      - api-data:/app/wwwroot/uploads
+    build:
+      context: ../EmployeeManagement
+      dockerfile: EmployeeManagement.API/Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "sql-server-db"
+    env_file: envs/api.env
+
+  #To check container logs
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    depends_on:
+      - "api"
+      - "sql-server-db"
+      
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - portainer-data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 9000:9000
+      
+volumes:
+  sql-server-data:
+  api-data:
+  portainer-data:
+
+
