@@ -19,9 +19,17 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EmployeeResponseDTO>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<EmployeeResponseDTO>>> GetAllAsync(
+        [FromQuery] GetAllEmployeesRequestDTO request)
     {
-        return Ok(await _mediator.Send(new GetAllEmployees.Query()));
+        return Ok(await _mediator.Send(new GetAllEmployees.Query
+        {
+            DepartmentId = request.DepartmentId,
+            Page = request.Page,
+            PageSize = request.PageSize,
+            Search = request.Search,
+            Sort = request.Sort
+        }));
     }
 
     [HttpGet("{id}", Name = "employee-details")]
