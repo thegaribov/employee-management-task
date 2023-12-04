@@ -37,7 +37,7 @@ public class DeleteEmployee
             var employee = await _employeeRepository.GetSingleOrDefaultAsync(e => e.Id == request.Id);
             if (employee == null)
             {
-                throw new NotFoundException($"Employee with id : {employee.Id}, not found");
+                throw new NotFoundException($"Employee with id : {request.Id}, not found");
             }
 
             _employeeRepository.Delete(employee);

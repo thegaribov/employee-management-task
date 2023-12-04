@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EmployeeManagement.Business.DTOs.Department;
+using EmployeeManagement.Core.Entities;
 
 namespace EmployeeManagement.Business.MappingProfiles;
 
 public class DepartmentProfile : Profile
 {
-
+    public DepartmentProfile()
+    {
+        CreateMap<Department, DepartmentResponseDTO>();
+    }
 }

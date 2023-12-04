@@ -46,7 +46,7 @@ public class CreateEmployee
 
         public async Task<EmployeeResponseDTO> Handle(Command request, CancellationToken cancellationToken)
         {
-            var department = _departmentRepository.GetSingleOrDefaultAsync(d => d.Id == request.DepartmentId);
+            var department = await _departmentRepository.GetSingleOrDefaultAsync(d => d.Id == request.DepartmentId);
             if (department == null)
             {
                 throw new NotFoundException($"Deparment with id : {department.Id}, not found.");

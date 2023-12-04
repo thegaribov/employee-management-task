@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Department\" />
-    <Folder Include="Handlers\Department\" />
     <Folder Include="Models\Dtos\" />
   </ItemGroup>
 

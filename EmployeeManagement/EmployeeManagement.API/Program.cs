@@ -27,11 +27,13 @@ namespace EmployeeManagement.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDatabase(builder.Environment, builder.Configuration);
+            builder.Services.AddMediatr();
 
             builder.Services.AddApiServices();
             builder.Services.RegisterAutoMapper();
 
             builder.Services.AddApiBehaviorConfigurations();
+
         }
         private static void ConfigureMiddlewarePipeline(WebApplication app)
         {

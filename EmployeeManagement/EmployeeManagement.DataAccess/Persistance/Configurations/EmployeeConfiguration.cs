@@ -42,12 +42,11 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         #endregion
 
-
         #region MontlyPayment
 
         builder
            .Property(p => p.MonthlyPayment)
-           .HasColumnType("decimal(5,2)")
+           .HasColumnType("decimal(8,2)")
            .IsRequired(true);
 
         #endregion

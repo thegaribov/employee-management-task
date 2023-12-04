@@ -3,6 +3,7 @@ using EmployeeManagement.Business.MappingProfiles;
 using EmployeeManagement.DataAccess.Contexts;
 using EmployeeManagement.DataAccess.Repositories.Abstracts;
 using EmployeeManagement.DataAccess.Repositories.Implementations;
+using EmployeeManagement.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ public static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddHttpContextAccessor();
@@ -58,9 +60,7 @@ public static class IServiceCollectionExtensions
 
     public static IServiceCollection AddMediatr(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddMediatR(x =>
-        {
-            x.RegisterServicesFromAssembly(typeof(GetAllEmployees).Assembly);
-        });
+        return serviceCollection.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(typeof(GetAllEmployees).Assembly));
     }
 }

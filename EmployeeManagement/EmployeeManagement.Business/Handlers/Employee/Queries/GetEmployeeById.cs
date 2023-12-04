@@ -8,12 +8,12 @@ namespace EmployeeManagement.Business.Handlers.Employee.Queries;
 
 public class GetEmployeeById
 {
-    public class Query : IRequest<IEnumerable<EmployeeDetailsResponseDTO>>
+    public class Query : IRequest<EmployeeDetailsResponseDTO>
     {
         public int Id { get; set; }
     }
 
-    public class Handler : IRequestHandler<Query, IEnumerable<EmployeeDetailsResponseDTO>>
+    public class Handler : IRequestHandler<Query, EmployeeDetailsResponseDTO>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
@@ -26,16 +26,16 @@ public class GetEmployeeById
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<EmployeeDetailsResponseDTO>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<EmployeeDetailsResponseDTO> Handle(Query request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository
                 .GetSingleOrDefaultAsync(e => e.Id == request.Id);
             if (employee == null)
             {
-                throw new NotFoundException($"Employee with id : {employee.Id}, not found");
+                throw new NotFoundException($"Employee with id : {request.Id}, not found");
             }
 
-            return _mapper.Map<IEnumerable<EmployeeDetailsResponseDTO>>(employee);
+            return _mapper.Map<EmployeeDetailsResponseDTO>(employee);
         }
     }
 }

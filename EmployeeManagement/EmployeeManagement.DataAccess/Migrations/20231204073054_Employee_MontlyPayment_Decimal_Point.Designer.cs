@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagement.DataAccess.Migrations
 {
     [DbContext(typeof(EmployeeManagementDbContext))]
-    [Migration("20231201075108_Employee")]
-    partial class Employee
+    [Migration("20231204073054_Employee_MontlyPayment_Decimal_Point")]
+    partial class Employee_MontlyPayment_Decimal_Point
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,9 +55,11 @@ namespace EmployeeManagement.DataAccess.Migrations
 
             modelBuilder.Entity("EmployeeManagement.Core.Entities.Employee", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -81,7 +83,7 @@ namespace EmployeeManagement.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("MonthlyPayment")
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
