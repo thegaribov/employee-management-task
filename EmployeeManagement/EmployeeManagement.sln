@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Core", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.DataAccess", "EmployeeManagement.DataAccess\EmployeeManagement.DataAccess.csproj", "{DE609343-D670-4F13-9877-44EBE76E90A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6161AE6A-7EBF-49C3-9C41-3975A6F51D38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B4CCF4D-22A6-44CE-A48E-9885CC74805E} = {6161AE6A-7EBF-49C3-9C41-3975A6F51D38}
+		{38414CE8-B75B-474E-8BA6-5318E2E5CF2B} = {6161AE6A-7EBF-49C3-9C41-3975A6F51D38}
+		{953E372B-CAE6-48D6-8C18-394835C36ADC} = {6161AE6A-7EBF-49C3-9C41-3975A6F51D38}
+		{DE609343-D670-4F13-9877-44EBE76E90A0} = {6161AE6A-7EBF-49C3-9C41-3975A6F51D38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {741E1252-3B5A-4994-8651-731A0A6BD07C}

@@ -1,12 +1,8 @@
 ﻿using EmployeeManagement.Business.DTOs.Department.Request;
 using EmployeeManagement.Business.DTOs.Department.Response;
-using EmployeeManagement.Business.DTOs.Employee;
 using EmployeeManagement.Business.Handlers.Department.Commands;
 using EmployeeManagement.Business.Handlers.Department.Queries;
-using EmployeeManagement.Business.Handlers.Employee.Commands;
-using EmployeeManagement.Business.Handlers.Employee.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.API.Controllers;
