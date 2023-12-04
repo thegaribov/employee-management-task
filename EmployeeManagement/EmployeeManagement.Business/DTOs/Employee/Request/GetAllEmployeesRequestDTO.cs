@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeManagement.Business.DTOs.Employee;
+namespace EmployeeManagement.Business.DTOs.Employee.Request;
 
 public class GetAllEmployeesRequestDTO : QueryParams
 {

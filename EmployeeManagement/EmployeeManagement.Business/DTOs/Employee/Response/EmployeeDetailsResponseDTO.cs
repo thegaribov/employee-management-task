@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeManagement.Business.DTOs.Employee;
+namespace EmployeeManagement.Business.DTOs.Employee.Response;
 
 public class EmployeeDetailsResponseDTO
 {

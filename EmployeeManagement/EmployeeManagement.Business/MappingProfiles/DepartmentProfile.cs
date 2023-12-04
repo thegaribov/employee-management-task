@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EmployeeManagement.Business.DTOs.Department;
+using EmployeeManagement.Business.DTOs.Department.Response;
 using EmployeeManagement.Core.Entities;
 
 namespace EmployeeManagement.Business.MappingProfiles;

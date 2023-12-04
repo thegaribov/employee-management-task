@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EmployeeManagement.Business.DTOs.Employee;
+using EmployeeManagement.Business.DTOs.Employee.Response;
 using EmployeeManagement.Core.Helpers.Paging;
 using EmployeeManagement.DataAccess.Repositories.Abstracts;
 using Marketplace.Common.Constants;

@@ -28,6 +28,8 @@ namespace EmployeeManagement.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddDatabase(builder.Environment, builder.Configuration);
             builder.Services.AddMediatr();
+            builder.Services.AddFluentValidationConfigs();
+
 
             builder.Services.AddApiServices();
             builder.Services.RegisterAutoMapper();

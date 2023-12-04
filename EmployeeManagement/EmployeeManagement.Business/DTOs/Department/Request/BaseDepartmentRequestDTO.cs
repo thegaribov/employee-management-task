@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeManagement.Business.DTOs.Department;
+namespace EmployeeManagement.Business.DTOs.Department.Request;
 
-public class UpdateDepartmentRequestDTO
+public class BaseDepartmentRequestDTO
 {
     public string Name { get; set; }
 }

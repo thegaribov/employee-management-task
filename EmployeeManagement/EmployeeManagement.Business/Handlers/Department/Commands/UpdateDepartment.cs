@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EmployeeManagement.Business.DTOs.Department;
+using EmployeeManagement.Business.DTOs.Department.Response;
 using EmployeeManagement.Business.Exceptions;
 using EmployeeManagement.DataAccess.Repositories.Abstracts;
 using EmployeeManagement.Repositories.UnitOfWork;

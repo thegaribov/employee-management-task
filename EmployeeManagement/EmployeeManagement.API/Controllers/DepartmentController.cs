@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Business.DTOs.Department;
+﻿using EmployeeManagement.Business.DTOs.Department.Request;
+using EmployeeManagement.Business.DTOs.Department.Response;
 using EmployeeManagement.Business.DTOs.Employee;
 using EmployeeManagement.Business.Handlers.Department.Commands;
 using EmployeeManagement.Business.Handlers.Department.Queries;

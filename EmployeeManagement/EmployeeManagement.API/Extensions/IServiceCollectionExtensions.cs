@@ -1,9 +1,12 @@
 ﻿using EmployeeManagement.Business.Handlers.Employee.Queries;
 using EmployeeManagement.Business.MappingProfiles;
+using EmployeeManagement.Business.Validators.Department;
 using EmployeeManagement.DataAccess.Contexts;
 using EmployeeManagement.DataAccess.Repositories.Abstracts;
 using EmployeeManagement.DataAccess.Repositories.Implementations;
 using EmployeeManagement.Repositories.UnitOfWork;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -62,5 +65,12 @@ public static class IServiceCollectionExtensions
     {
         return serviceCollection.AddMediatR(cfg => 
             cfg.RegisterServicesFromAssembly(typeof(GetAllEmployees).Assembly));
+    }
+
+    public static IServiceCollection AddFluentValidationConfigs(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddFluentValidationAutoValidation()
+            .AddValidatorsFromAssemblyContaining<CreateEmployeeRequestDTOValidator>();
     }
 }

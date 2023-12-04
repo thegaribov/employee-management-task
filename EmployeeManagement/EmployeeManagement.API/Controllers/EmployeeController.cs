@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Business.DTOs.Employee;
+﻿using EmployeeManagement.Business.DTOs.Employee.Request;
+using EmployeeManagement.Business.DTOs.Employee.Response;
 using EmployeeManagement.Business.Handlers.Employee.Commands;
 using EmployeeManagement.Business.Handlers.Employee.Queries;
 using MediatR;
