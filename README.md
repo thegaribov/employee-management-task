@@ -19,11 +19,13 @@ Basic employee management system. Features :
 - SQL Server
 - Swagger UI
 - Serilog
+- XUnit (+ FluentAssertions)
 
 # Design principles & patterns
 - Unit Of Work
 - Repository & Generic Repository
 - ORM
+- Unit testing
 - Elegant Exception handling
 - Single responsibility principle
 - Dependency Inversion principle
