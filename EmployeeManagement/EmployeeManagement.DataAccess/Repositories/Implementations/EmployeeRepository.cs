@@ -73,4 +73,9 @@ public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
                 EF.Functions.Like(e.Name, $"%{searchQuery}%"));
         }
     }
+
+    public async Task<Employee> GetSingleOrDefaultByIdAsync(int id)
+    {
+        return await _context.Employees.SingleOrDefaultAsync(d => d.Id == id);
+    }
 }

@@ -27,7 +27,7 @@ public class DeleteDepartment
 
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
-            var department = await _departmentRepository.GetSingleOrDefaultAsync(e => e.Id == request.Id);
+            var department = await _departmentRepository.GetSingleOrDefaultByIdAsync(request.Id);
             if (department == null)
             {
                 throw new NotFoundException($"Department with id : {request.Id}, not found");

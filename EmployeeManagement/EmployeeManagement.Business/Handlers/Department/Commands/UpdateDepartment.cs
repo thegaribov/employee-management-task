@@ -33,7 +33,7 @@ public class UpdateDepartment
 
         public async Task<DepartmentResponseDTO> Handle(Command request, CancellationToken cancellationToken)
         {
-            var department = await _departmentRepository.GetSingleOrDefaultAsync(d => d.Id == request.Id);
+            var department = await _departmentRepository.GetSingleOrDefaultByIdAsync(request.Id);
             if (department == null)
             {
                 throw new NotFoundException($"Deparment with id : {request.Id}, not found.");

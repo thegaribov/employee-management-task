@@ -7,4 +7,5 @@ namespace EmployeeManagement.DataAccess.Repositories.Abstracts;
 public interface IEmployeeRepository : IBaseRepository<Employee>
 {
     Task<Paginator<Employee>> GetAllPaginatedFilteredSorted(QueryParams queryParams, int? departmentId);
+    Task<Employee> GetSingleOrDefaultByIdAsync(int id);
 }

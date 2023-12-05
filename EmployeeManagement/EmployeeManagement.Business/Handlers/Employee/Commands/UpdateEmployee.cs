@@ -47,13 +47,13 @@ public class UpdateEmployee
 
         public async Task<EmployeeResponseDTO> Handle(Command request, CancellationToken cancellationToken)
         {
-            var employee = await _employeeRepository.GetSingleOrDefaultAsync(e => e.Id == request.Id);
+            var employee = await _employeeRepository.GetSingleOrDefaultByIdAsync(request.Id);
             if (employee == null)
             {
                 throw new NotFoundException($"Employee with id : {request.Id}, not found");
             }
 
-            var department = await _departmentRepository.GetSingleOrDefaultAsync(d => d.Id == request.DepartmentId);
+            var department = await _departmentRepository.GetSingleOrDefaultByIdAsync(request.DepartmentId);
             if (department == null)
             {
                 throw new NotFoundException($"Deparment with id : {request.DepartmentId}, not found.");

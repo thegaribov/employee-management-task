@@ -34,7 +34,7 @@ public class DeleteEmployee
 
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
-            var employee = await _employeeRepository.GetSingleOrDefaultAsync(e => e.Id == request.Id);
+            var employee = await _employeeRepository.GetSingleOrDefaultByIdAsync(request.Id);
             if (employee == null)
             {
                 throw new NotFoundException($"Employee with id : {request.Id}, not found");

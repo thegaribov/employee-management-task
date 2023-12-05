@@ -29,7 +29,7 @@ public class GetEmployeeById
         public async Task<EmployeeDetailsResponseDTO> Handle(Query request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository
-                .GetSingleOrDefaultAsync(e => e.Id == request.Id);
+                .GetSingleOrDefaultByIdAsync(request.Id);
             if (employee == null)
             {
                 throw new NotFoundException($"Employee with id : {request.Id}, not found");
