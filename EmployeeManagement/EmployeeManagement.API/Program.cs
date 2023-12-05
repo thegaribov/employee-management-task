@@ -47,6 +47,8 @@ namespace EmployeeManagement.API
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            app.UseSerilogRequestLogging();
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseCors(cpb =>
@@ -55,7 +57,6 @@ namespace EmployeeManagement.API
                     .AllowAnyHeader()
             );
 
-            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
