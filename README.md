@@ -19,7 +19,7 @@ Basic employee management system. Features :
 - SQL Server
 - Swagger UI
 - Serilog
-- XUnit
+- XUnit (+ FluentAssertions)
 
 # Design principles & patterns
 - Unit Of Work
