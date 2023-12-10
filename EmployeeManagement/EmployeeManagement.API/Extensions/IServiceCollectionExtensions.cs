@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Business.Handlers.Employee.Queries;
+﻿using EmployeeManagement.API.Options;
+using EmployeeManagement.Business.Handlers.Employee.Queries;
 using EmployeeManagement.Business.MappingProfiles;
 using EmployeeManagement.Business.Validators.Department;
 using EmployeeManagement.DataAccess.Contexts;
@@ -9,6 +10,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -30,18 +32,31 @@ public static class IServiceCollectionExtensions
     public static IServiceCollection AddDatabase
         (this IServiceCollection serviceCollection, IWebHostEnvironment env, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<EmployeeManagementDbContext>(options =>
-        {
-            if (env.IsDevelopment())
-            {
-                options.EnableSensitiveDataLogging();
-            }
+        var databaseConfig = configuration.GetSection("Database").Get<DatabaseConfigOptions>();
 
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), o =>
+        if (databaseConfig.UseInMemoryDatabase)
+        {
+            serviceCollection.AddDbContext<EmployeeManagementDbContext>(options =>
             {
-                o.MigrationsAssembly("EmployeeManagement.DataAccess");
+                options.UseInMemoryDatabase("EmployeeManagement");
+                options.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
-        });
+        }
+        else
+        {
+            serviceCollection.AddDbContext<EmployeeManagementDbContext>(options =>
+            {
+                if (env.IsDevelopment())
+                {
+                    options.EnableSensitiveDataLogging();
+                }
+
+                options.UseSqlServer(databaseConfig.ConnectionString, o =>
+                {
+                    o.MigrationsAssembly("EmployeeManagement.DataAccess");
+                });
+            });
+        }
 
         return serviceCollection;
     }

@@ -56,7 +56,7 @@ public class GetEmployeeByIdHandlerTests
             Id = 1,
         };
 
-        var expected = new EmployeeResponseDTO
+        var expected = new EmployeeDetailsResponseDTO
         {
             Id = 1,
             Name = "Mahmood",
@@ -69,12 +69,19 @@ public class GetEmployeeByIdHandlerTests
         _employeeRepositoryMock
             .Setup(r =>
                 r.GetSingleOrDefaultByIdAsync(It.Is<int>(i => i == 1)))
-            .Returns(Task.FromResult<Core.Entities.Employee>(null));
+            .Returns(Task.FromResult<Core.Entities.Employee>(new Core.Entities.Employee
+            {
+                Id = 1,
+                Name = "Mahmood",
+                Surname = "Garibov",
+                Age = 22,
+                DepartmentId = 1,
+            }));
 
         _mapperMock
             .Setup(r => 
                 r.Map<EmployeeDetailsResponseDTO>(It.IsAny<Core.Entities.Employee>()))
-            .Returns(() => new EmployeeResponseDTO
+            .Returns(new EmployeeDetailsResponseDTO
             {
                 Id = 1,
                 Name = "Mahmood",
@@ -90,6 +97,5 @@ public class GetEmployeeByIdHandlerTests
         var result = await handler.Handle(command, default);
 
         result.Should().BeEquivalentTo(expected);
-        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(), Times.Once);
     }
 }
