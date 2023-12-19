@@ -1,6 +1,7 @@
 using EmployeeManagement.API.Extensions;
 using EmployeeManagement.API.Middlewares;
 using EmployeeManagement.DataAccess.Persistance;
+using Microsoft.AspNetCore;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -25,6 +26,10 @@ namespace EmployeeManagement.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureAppConfiguration((_, configBuilder) =>
+                    {
+                        configBuilder.AddEnvironmentVariables();
+                    }); ;
                 });
     }
 }

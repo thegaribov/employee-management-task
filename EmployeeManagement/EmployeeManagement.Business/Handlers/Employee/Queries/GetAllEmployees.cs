@@ -13,6 +13,8 @@ public class GetAllEmployees
     public class Query : QueryParams, IRequest<IEnumerable<EmployeeResponseDTO>>
     {
         public int? DepartmentId { get; set; }
+        public DateTime? BirthDateStart { get; init; }
+        public DateTime? BirthDateEnd { get; init; }
     }
 
     public class Handler : IRequestHandler<Query, IEnumerable<EmployeeResponseDTO>>
@@ -34,7 +36,8 @@ public class GetAllEmployees
         public async Task<IEnumerable<EmployeeResponseDTO>> Handle(Query request, CancellationToken cancellationToken)
         {
             var employeesPaginator = await _employeeRepository
-                .GetAllPaginatedFilteredSorted(request, request.DepartmentId);
+                .GetAllPaginatedFilteredSorted
+                (request, request.DepartmentId, request.BirthDateStart, request.BirthDateEnd);
 
             _httpContextAccessor.HttpContext.Response.Headers
                 .Add(CustomHeaderNames.XPagination, employeesPaginator.ToString());

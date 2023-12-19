@@ -26,6 +26,8 @@ public class EmployeeController : ControllerBase
         return Ok(await _mediator.Send(new GetAllEmployees.Query
         {
             DepartmentId = request.DepartmentId,
+            BirthDateStart = request.BirthDateStart,
+            BirthDateEnd = request.BirthDateEnd,
             Page = request.Page,
             PageSize = request.PageSize,
             Search = request.Search,
